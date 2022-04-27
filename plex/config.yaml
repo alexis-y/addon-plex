@@ -1,9 +1,9 @@
 ---
-name: Plex Media Server
+name: Plex Media Server (AUY)
 version: dev
-slug: plex
+slug: plex-auy
 description: Recorded media, live TV, online news, and podcasts ready to stream.
-url: https://github.com/hassio-addons/addon-plex
+url: https://github.com/alexis-y/addon-plex
 codenotary: codenotary@frenck.dev
 webui: http://[HOST]:[PORT:32400]/web
 startup: services
