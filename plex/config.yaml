@@ -1,7 +1,7 @@
 ---
 name: Plex Media Server (AUY)
 version: dev
-slug: plex-auy
+slug: plex
 description: Recorded media, live TV, online news, and podcasts ready to stream.
 url: https://github.com/alexis-y/addon-plex
 codenotary: codenotary@frenck.dev
@@ -52,3 +52,9 @@ schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
   claim_code: str
   webtools: bool
+  mounts:
+    - str
+privileged: 
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
+apparmor: false

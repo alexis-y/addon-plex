@@ -14,6 +14,10 @@ configuration:
     description: >-
       Install and enable the WebTools plug-in that contains a collection of
       tools for the Plex Media Server.
+  mounts:
+    name: Mounts
+    description: >-
+      List of network shares that will be locally mounted under /mnt. Each entry is "[local mount point]|[remote share and paths]".
 network:
   3005/tcp: Plex Home Theater via Plex Companion
   8324/tcp: Plex for Roku via Plex Companion

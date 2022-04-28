@@ -3,6 +3,20 @@
 # Home Assistant Community Add-on: Plex Media Server
 # Runs the Plex Media Server
 # ==============================================================================
+if bashio::config.has_value 'mounts'; then
+  while read -r mountspec; do
+    readarray -d "|" -t m <<< "${mountspec}"
+    remote=`echo ${m[1]} | xargs`
+    local=`echo ${m[0]} | xargs`
+
+    bashio::log.info "Mounting \"${remote}\" to \"/mnt/${local}\""
+
+    mkdir -p "/mnt/${local}"
+    mount -v "${remote}" "/mnt/${local}"
+  done <<< "$(bashio::config 'mounts')"
+fi
+
+
 bashio::log.info 'Starting the Plex Media Server...'
 
 export LD_LIBRARY_PATH=/usr/lib/plexmediaserver
@@ -10,10 +24,6 @@ export PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver
 export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
 export PLEX_MEDIA_SERVER_INFO_DEVICE="Hass.io"
 export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/data
-
-# Mount my media
-mkdir /media/music
-mount --verbose -t nfs4 "192.168.1.10:/volume1/Alexis/Música de archivo" /media/music
 
 # Run the Plex Media Server
 exec /usr/lib/plexmediaserver/Plex\ Media\ Server

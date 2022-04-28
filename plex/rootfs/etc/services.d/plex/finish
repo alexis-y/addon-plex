@@ -6,4 +6,15 @@
 if -n { s6-test $# -ne 0 }
 if -n { s6-test ${1} -eq 256 }
 
+if bashio::config.has_value 'mounts'; then
+  while read -r mountspec; do
+    readarray -d "|" -t m <<< "${mountspec}"
+    local=`echo ${m[0]} | xargs`
+
+    bashio::log.info "Unmounting \"${local}\""
+
+    umount "/mnt/${local}"
+  done <<< "$(bashio::config 'mounts')"
+fi
+
 s6-svscanctl -t /var/run/s6/services
